@@ -2,18 +2,6 @@
 
 Download, extract and load the [CAL-ACCESS](http://www.sos.ca.gov/prd/cal-access/) campaign finance and lobbying activity database.
 
-Currently tied to MySQL just to get it in and look at it. Need to figure out how to leverage CSVKit and shoehorn it into Django.
-
-* cal_access_testing.sql -- MySQL dump of the table schemas.
-
-* env_settings.py.example -- set-up your local settings here and save as env_settings.py.
-
-* clean_data.py -- quoting of fields was a problem with the data before they moved to TSV from CSV format. This fixed that as well as NULL bytes in the data. It would be great to get taking care of encoding, date conversions and the rest right here.
-
-* load_cut.py -- uses LOAD DATA INFILE to quickly suck in the data and make some lookup tables.
-
-* check_load.py -- make sure rows imported matches the number of lines in the csv file.
-
 ## Requirements
 - Python 2.7
 - MySQL 5.5
@@ -75,18 +63,12 @@ $ python manage.py downloadaccess
 
 ## Setting up the Campaign Finance app
 
-The campaign finance app tracks the spending and cashflow candidates, PACs, and organizations. The app frontend build is handled by [Grunt](http://gruntjs.com/), a JavaScript tasks manager for Node.js. Make sure you have the requirements listed at the top of the README installed before loading this app up. 
-
-Now, hop into the python shell and load up the models for the `campaign_finance` app
-```bash
-$ python manage.py shell
-```
-```python
-from campaign_finance import load
-
-load.load()
-```
+The campaign finance app tracks the spending and cashflow candidates, PACs, and organizations.
 :warning: This'll take a while. Go grab *another* coffee or do something else productive with your life.
+```bash
+$ python manage.py build_campaign_finance
+```
+
 
 ### Setup search
 Search isn't really wired up yet but we can use [Haystack's](http://django-haystack.readthedocs.org/en/latest/toc.html) dummy search for now. Go ahead and build the index to search against.
